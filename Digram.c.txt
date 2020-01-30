@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+
+struct codes
+{
+	char symbol[2];
+	int code;
+};
+
+struct codes c[8]={{"a",0},{"b",1},{"c",2},{"d",3},
+		   {"e",4},{"ab",5},{"ac",6},{"ad",7}};
+void main()
+{
+      FILE *fptr;
+      char ch,ch1,ch2;
+      char a[50];
+      char temp[2];
+      int encode[50];
+      int i=0,j,k=0,isPresent=0;
+      clrscr();
+      fptr=fopen("sample1.txt","r");
+
+      printf("content of file:\n\n");
+      while((ch=fgetc(fptr))!=EOF)
+      {
+	    a[i]=ch;
+	    printf("%c",a[i]);
+	    i++;
+      }
+
+      for(i=0;a[i]!='\0';i++)
+      {
+	    isPresent=0;
+	    ch1=a[i];
+	    ch2=a[i+1];
+	    for(j=5;j<=7;j++)
+	    {
+		 if(c[j].symbol[0]==ch1)
+		 {
+			if(c[j].symbol[1]==ch2)
+			{
+				encode[k++]=c[j].code;
+				isPresent=1;
+				i++;
+			}
+		 }
+	    }
+	    if(isPresent==0)
+	    {
+		 for(j=0;j<=4;j++)
+		 {
+			if(c[j].symbol[0]==ch1)
+			{
+				encode[k++]=c[j].code;
+
+			}
+		 }
+	    }
+
+      }
+      printf("\n\nEncoded sequence:\n\n");
+      for(i=0;i<k;i++)
+      printf("%d",encode[i]);
+
+      getch();
+
+}
